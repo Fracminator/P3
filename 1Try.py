@@ -8,7 +8,7 @@ cap=cv2.imread('g2.jpg')
 width = cap.get(3)
 height = cap.get(4)
 fps = cap.get(5)"""
-hej hej 
+
 width,height,_=cap.shape
 print(width,height)
 nextID = 0
@@ -25,6 +25,7 @@ def process (x,y,image):
         if x-1>0 and image[y, x - 1] < 250:
             q.append((x, y - 1))
 while True:
+    #TODO:gfghkfg
    # _, frame = cap.read()
     frame=cap
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)  # convert color to HSV so it actually works
