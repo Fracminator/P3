@@ -8,7 +8,7 @@ cap=cv2.imread('g2.jpg')
 width = cap.get(3)
 height = cap.get(4)
 fps = cap.get(5)"""
-
+hej hej 
 width,height,_=cap.shape
 print(width,height)
 nextID = 0
