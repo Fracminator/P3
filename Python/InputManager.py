@@ -6,10 +6,6 @@ class InputManager:
     output = "holder"
 
     def getinput(self, requestedname):
-        place = "holder"
-        # TODO: loop through all indexes of inputs, check the tuple inside to find the input connected
-        #  to the string received as an argument. Then return the input object connected to said string.
-
         for input in self.__inputs:
             if input[1] == requestedname:
                 return input[0]
