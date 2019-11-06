@@ -3,7 +3,6 @@ from Camera import Camera
 
 class InputManager:
     __inputs = []
-    output = "holder"
 
     def getinput(self, requestedname):
         for input in self.__inputs:
