@@ -10,8 +10,7 @@ managers = [scenemanager, inputmanager]
 
 inputmanager.createcamera("camera")
 
-inputs = inputmanager.getinput("xd")
-camera = inputs[0][0]
+camera = inputmanager.getinput("camera")
 
 cv2.imshow("name", camera.getframe())
 cv2.waitKey(0)
