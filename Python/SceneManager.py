@@ -5,12 +5,12 @@ class SceneManager:
     def __init__(self):
         place = "holder"
 
-    def addscene(self, scene):
+    def addScene(self, scene):
         self.__scenes.append(scene)  # Add scene to scenes
 
-    def changeactivescene(self, scene):
+    def changeActiveCcene(self, scene):
         if self.__scenes.__contains__(scene):
             self.__activeScene = scene
 
-    def getactivescene(self):
+    def getActiveScene(self):
         return self.activeScene

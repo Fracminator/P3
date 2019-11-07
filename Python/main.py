@@ -4,18 +4,18 @@ from Exercise import Exercise
 import cv2
 
 # Define the managers, which handle the inputs and the scenes. This needs to be done before mostly everything.
-scenemanager = SceneManager()
-inputmanager = InputManager()
-managers = [scenemanager, inputmanager]
+sceneManager = SceneManager()
+inputManager = InputManager()
+managers = [sceneManager, inputManager]
 
-inputmanager.createcamera("camera")
+inputManager.createCamera("camera")
 
-camera = inputmanager.getinput("camera")
-
-cv2.imshow("name", camera.getframe())
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
+camera = inputManager.getInput("camera")
 
 coordinates = []
 currentScene = Exercise(coordinates, managers)
+
+while True:
+    cv2.imshow("name", camera.getFrame())
+    cv2.waitKey(0)
+    # cv2.destroyAllWindows()
