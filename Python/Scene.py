@@ -7,8 +7,12 @@ class Scene(ABC):
         self.sceneManager = managers[0]
         self.inputManager = managers[1]
 
-    def __getInput(self, string):
+    def getInput(self, string):
         return self.inputManager.getInput(string)
 
+    def getSceneManager(self):
+        return self.sceneManager
+
     def update(self):
+        # This function is meant to be overriden by every subclass.
         pass

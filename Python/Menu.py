@@ -3,9 +3,9 @@ from Scene import Scene
 
 class Menu(Scene):
 
-    def __init__(self):
-        super().__init__()
-        place = "holder"
+    def __init__(self, managers):
+        super().__init__(managers)
 
+    # Overrides superclass update() function
     def update(self):
-        place = "holder"
+        print("test")

@@ -10,7 +10,7 @@ class InputManager:
         for input in self.__inputs:
             if input[1] == requestedName:
                 return input[0]
-        print("Your requested name is not valid: " + requestedName)
+        print("ERROR: getInput() failed. Requested name is not valid: " + requestedName)
         return
 
     def createCamera(self, name):

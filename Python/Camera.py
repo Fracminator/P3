@@ -13,3 +13,5 @@ class Camera:
         # The boolean is true if the image was read properly, so we check for that, and then return the image data.
         if readCorrectly:
             return image
+        else:
+            print("ERROR: getFrame() failed. Image not read correctly")

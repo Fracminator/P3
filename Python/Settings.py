@@ -5,7 +5,7 @@ class Settings(Scene):
 
     def __init__(self):
         super().__init__()
-        place = "holder"
 
+    # Overrides superclass update() function
     def update(self):
         place = "holder"

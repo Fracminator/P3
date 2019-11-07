@@ -1,21 +1,23 @@
 from SceneManager import SceneManager
 from InputManager import InputManager
 from Exercise import Exercise
-import cv2
+from Menu import Menu
 
-# Define the managers, which handle the inputs and the scenes. This needs to be done before mostly everything.
+# Define the managers, which handle the inputs and the scenes. This needs to be done before mostly everything
 sceneManager = SceneManager()
 inputManager = InputManager()
 managers = [sceneManager, inputManager]
 
-inputManager.createCamera("camera")
+# Create the necessary inputs
+inputManager.createCamera("Camera")
 
-camera = inputManager.getInput("camera")
 
-coordinates = []
-currentScene = Exercise(coordinates, managers)
+exerciseScene = Exercise([], managers)
+menuScene = Menu(managers)
+sceneManager.addScene(exerciseScene, "Exercise")
+sceneManager.addScene(menuScene, "Menu")
+sceneManager.setActiveScene("Exercise")
 
+# Main loop
 while True:
-    cv2.imshow("name", camera.getFrame())
-    cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    sceneManager.getActiveScene().update()

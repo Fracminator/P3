@@ -1,3 +1,6 @@
+from Scene import Scene
+
+
 class SceneManager:
     __scenes = []
     __activeScene = None
@@ -5,12 +8,15 @@ class SceneManager:
     def __init__(self):
         place = "holder"
 
-    def addScene(self, scene):
-        self.__scenes.append(scene)  # Add scene to scenes
+    def addScene(self, scene, name):
+        self.__scenes.append((scene, name))  # Add scene to scenes
 
-    def changeActiveCcene(self, scene):
-        if self.__scenes.__contains__(scene):
-            self.__activeScene = scene
+    def setActiveScene(self, sceneName):
+        for scene in self.__scenes:
+            if scene[1] == sceneName:
+                self.__activeScene = scene[0]
+                return
+        print("ERROR: setActiveScene failed, as the specified scene is not part of the scene list. Did you forgot to run .addScene(scene) on it?")
 
     def getActiveScene(self):
-        return self.activeScene
+        return self.__activeScene
