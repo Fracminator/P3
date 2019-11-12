@@ -3,12 +3,9 @@ from abc import ABC  # Abstraction
 
 class Scene(ABC):
 
-    def __init__(self, managers):
-        self.sceneManager = managers[0]
-        self.inputManager = managers[1]
-
-    def getInput(self, string):
-        return self.inputManager.getInput(string)
+    def __init__(self, sceneManager, camera):
+        self.sceneManager = sceneManager
+        self.camera = camera
 
     def getSceneManager(self):
         return self.sceneManager

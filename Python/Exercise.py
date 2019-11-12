@@ -4,18 +4,17 @@ import cv2
 
 class Exercise(Scene):
 
-    coordinates = []
-
-    def __init__(self, coordinates, managers):
-        super().__init__(managers)  # Call the initializing function of the superclass, aka Scene.
+    def __init__(self, coordinates, sceneManager, camera):
+        super().__init__(sceneManager, camera)  # Call the initializing function of the superclass, aka Scene.
         self.coordinates = coordinates
-        self.camera = super().getInput("Camera")
 
     # Overrides superclass update() function
     def update(self):
-        cv2.imshow("Camera output", self.camera.getFrame())
-        cv2.waitKey(0)
-        self.sceneManager.setActiveScene("Menu")  # sceneManager was inherited from the superclass.
+        frame = self.camera.getFrame()
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cv2.imshow("Camera output", gray)
+        cv2.waitKey(1)
+        # self.sceneManager.setActiveScene("Menu")  # sceneManager was inherited from the superclass.
 
     def validate(self, coordinates, step):
         place = "holder"

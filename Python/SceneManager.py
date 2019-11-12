@@ -2,11 +2,10 @@ from Scene import Scene
 
 
 class SceneManager:
-    __scenes = []
-    __activeScene = None
 
     def __init__(self):
-        place = "holder"
+        self.__scenes = []
+        self.__activeScene = Scene
 
     def addScene(self, scene, name):
         self.__scenes.append((scene, name))  # Add scene to scenes
@@ -20,3 +19,6 @@ class SceneManager:
 
     def getActiveScene(self):
         return self.__activeScene
+
+    def update(self):
+        self.__activeScene.update()

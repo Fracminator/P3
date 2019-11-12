@@ -3,8 +3,8 @@ from Scene import Scene
 
 class Menu(Scene):
 
-    def __init__(self, managers):
-        super().__init__(managers)
+    def __init__(self, sceneManager, camera):
+        super().__init__(sceneManager, camera)
 
     # Overrides superclass update() function
     def update(self):

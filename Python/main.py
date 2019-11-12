@@ -1,23 +1,22 @@
 from SceneManager import SceneManager
-from InputManager import InputManager
+from Camera import Camera
 from Exercise import Exercise
 from Menu import Menu
 
 # Define the managers, which handle the inputs and the scenes. This needs to be done before mostly everything
 sceneManager = SceneManager()
-inputManager = InputManager()
-managers = [sceneManager, inputManager]
 
 # Create the necessary inputs
-inputManager.createCamera("Camera")
+camera = Camera()
 
 
-exerciseScene = Exercise([], managers)
-menuScene = Menu(managers)
+exerciseScene = Exercise([], sceneManager, camera)
+menuScene = Menu(sceneManager, camera)
 sceneManager.addScene(exerciseScene, "Exercise")
 sceneManager.addScene(menuScene, "Menu")
 sceneManager.setActiveScene("Exercise")
 
+
 # Main loop
 while True:
-    sceneManager.getActiveScene().update()
+    sceneManager.update()
