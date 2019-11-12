@@ -11,8 +11,15 @@ class Exercise(Scene):
     # Overrides superclass update() function
     def update(self):
         frame = self.camera.getFrame()
+        frame = cv2.imread("filterinput.png")
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        cv2.imshow("Camera output", gray)
+        median = self.camera.medianBlur(gray)
+        median2 = self.camera.medianBlur(median)
+        median3 = self.camera.medianBlur(median2)
+        cv2.imshow("Camera output gray", gray)
+        cv2.imshow("Median x1", median)
+        cv2.imshow("Median x2", median2)
+        cv2.imshow("Median x3", median3)
         cv2.waitKey(1)
         # self.sceneManager.setActiveScene("Menu")  # sceneManager was inherited from the superclass.
 
