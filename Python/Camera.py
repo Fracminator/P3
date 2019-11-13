@@ -7,6 +7,11 @@ import math
 
 class Camera:
 
+    # The modes for neighbourfilter
+    MINIMUM = 0
+    MEDIAN = 4
+    MAXIMUM = 8
+
     def __init__(self):
         self.__camera = cv2.VideoCapture(0)
         self.__camera.set(3, 320)
@@ -52,27 +57,35 @@ class Camera:
 
         return frame
 
-
     def medianBlur(self, frame):
+        return self.neighbourfilter(frame, self.MEDIAN, None)
+
+    def dilate(self, frame):
+        return self.neighbourfilter(frame, self.MAXIMUM, 0)
+
+    def erosion(self, frame):
+        return self.neighbourfilter(frame, self.MINIMUM, 255)
+
+    def neighbourfilter(self, frame, mode, mask):
         pixelValues = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         frameOutput = np.copy(frame)
         width, height = frame.shape
         for x in range(2, (width - 1)):
             for y in range(2, (height - 1)):
-                pixelValues[0] = frame[x - 1][y - 1]
-                pixelValues[1] = frame[x][y - 1]
-                pixelValues[2] = frame[x + 1][y - 1]
+                if frame[x][y] == mask or mode == self.MEDIAN:
+                    pixelValues[0] = frame[x - 1][y - 1]
+                    pixelValues[1] = frame[x][y - 1]
+                    pixelValues[2] = frame[x + 1][y - 1]
 
-                pixelValues[3] = frame[x - 1][y]
-                pixelValues[4] = frame[x][y]
-                pixelValues[5] = frame[x + 1][y]
+                    pixelValues[3] = frame[x - 1][y]
+                    pixelValues[4] = frame[x][y]
+                    pixelValues[5] = frame[x + 1][y]
 
-                pixelValues[6] = frame[x - 1][y + 1]
-                pixelValues[7] = frame[x][y + 1]
-                pixelValues[8] = frame[x + 1][y + 1]
+                    pixelValues[6] = frame[x - 1][y + 1]
+                    pixelValues[7] = frame[x][y + 1]
+                    pixelValues[8] = frame[x + 1][y + 1]
 
-                list.sort(pixelValues)
-                frameOutput[x][y] = pixelValues[4]  # The median value.
+                    list.sort(pixelValues)
+                    frameOutput[x][y] = pixelValues[mode]  # The median value.
 
         return frameOutput
-
