@@ -138,3 +138,37 @@ class Camera:
                     frameOutput[x][y] = pixelValues[mode]  # The median value.
 
         return frameOutput
+    def getCenterPixel(self,frame):
+        width, height = frame.shape
+        miny = height
+        maxy = 0
+        minx = width
+        maxx = 0
+
+        # -----------------------------------------------------------------------
+
+        for y in range(height):
+            for x in range(width):
+                if frame[x, y] == 255:
+                    if y < miny:
+                        miny = y
+                    elif y > maxy:
+                        maxy = y
+                    if x < minx:
+                        minx = x
+                    if x > maxx:
+                        maxx = x
+
+        avgx = int((minx + maxx) / 2)
+        avgy = int((miny + maxy) / 2)
+        return {avgx, avgy}
+    #---------------------------------------------------------------------------
+
+    #HSP in range function
+    def Masking(self,hsvframe):
+        cv2.imshow('hsv',hsvframe)
+        lower_color = np.array([30, 75, 75])
+        upper_color = np.array([70, 255, 255])
+
+        mask = cv2.inRange(hsvframe, lower_color, upper_color)
+        return mask
