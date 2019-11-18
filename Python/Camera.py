@@ -127,13 +127,13 @@ class Camera:
 
         avgx = int((minx + maxx) / 2)
         avgy = int((miny + maxy) / 2)
-        return {avgx, avgy}
+        return avgx, avgy
     #---------------------------------------------------------------------------
 
     #HSP in range function
     def Masking(self,hsvframe):
-        lower_color = np.array([70, 100, 100])
-        upper_color = np.array([90, 255, 255])
+        lower_color = np.array([30, 75, 75])
+        upper_color = np.array([70, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask
