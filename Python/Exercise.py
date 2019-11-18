@@ -10,15 +10,10 @@ class Exercise(Scene):
 
     # Overrides superclass update() function
     def update(self):
-        frame = self.camera.getFrame()
-        # frame = cv2.imread("filterinput.png")
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        median = self.camera.medianBlur(gray, 5)
-        erosion = self.camera.erosion(median, 5)
-        cv2.imshow("Input", gray)
-        cv2.imshow("median", median)
-        cv2.imshow("erosion", erosion)
-        self.camera.Masking()
+        frame = self.camera.getFrameHSV()
+        mask = self.camera.Masking(frame)
+        cv2.imshow("Frame", frame)
+        cv2.imshow("Mask", mask)
 
         # cv2.imshow("frame", frame)
         cv2.waitKey(1)
