@@ -3,6 +3,8 @@ from Camera import Camera
 from Exercise import Exercise
 from Menu import Menu
 
+
+
 # Define the managers, which handle the inputs and the scenes. This needs to be done before mostly everything
 sceneManager = SceneManager()
 

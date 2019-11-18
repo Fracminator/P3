@@ -18,6 +18,7 @@ class Exercise(Scene):
         cv2.imshow("Input", gray)
         cv2.imshow("median", median)
         cv2.imshow("erosion", erosion)
+        self.camera.Masking()
 
         # cv2.imshow("frame", frame)
         cv2.waitKey(1)
