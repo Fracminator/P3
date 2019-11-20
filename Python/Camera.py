@@ -132,8 +132,13 @@ class Camera:
 
     #HSP in range function
     def Masking(self,hsvframe):
-        lower_color = np.array([30, 75, 75])
-        upper_color = np.array([70, 255, 255])
+        # Frederik's webcam green values
+        # lower_color = np.array([30, 75, 75])
+        # upper_color = np.array([70, 255, 255])
+
+        # Mikkel's webcam green values
+        lower_color = np.array([75, 100, 100])
+        upper_color = np.array([105, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask
