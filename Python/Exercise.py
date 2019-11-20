@@ -22,5 +22,6 @@ class Exercise(Scene):
         # self.sceneManager.setActiveScene("Menu")  # sceneManager was inherited from the superclass.
 
     def validate(self, avgx, avgy, ptx, pty):
-        if avgx > ptx - 25 and avgx < ptx + 25 and avgy > pty - 25 and avgy < ptx + 25:
+        if avgx > ptx - 25 and avgx < ptx + 25 and avgy > pty - 25 and avgy < pty + 25:
             self.score += 1
+
