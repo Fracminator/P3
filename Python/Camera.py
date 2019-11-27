@@ -105,6 +105,7 @@ class Camera:
 
         return frameOutput
     def getCenterPixel(self,frame):
+        foundPixel = False
         width, height = frame.shape
         miny = height
         maxy = 0
@@ -116,6 +117,7 @@ class Camera:
         for y in range(height):
             for x in range(width):
                 if frame[x, y] == 255:
+                    foundPixel = True
                     if y < miny:
                         miny = y
                     elif y > maxy:
@@ -125,20 +127,24 @@ class Camera:
                     if x > maxx:
                         maxx = x
 
-        avgx = int((minx + maxx) / 2)
-        avgy = int((miny + maxy) / 2)
+        if foundPixel:
+            avgx = int((minx + maxx) / 2)
+            avgy = int((miny + maxy) / 2)
+        else:
+            avgx = 0
+            avgy = 0
+
         return avgx, avgy
-    #---------------------------------------------------------------------------
 
     #HSP in range function
-    def Masking(self,hsvframe):
+    def Masking(self, hsvframe):
         # Frederik's webcam green values
-        lower_color = np.array([30, 50, 50])
-        upper_color = np.array([70, 255, 255])
+        #lower_color = np.array([30, 50, 50])
+        # upper_color = np.array([70, 255, 255])
 
         # Mikkel's webcam green values
-        #lower_color = np.array([75, 100, 100])
-        #upper_color = np.array([105, 255, 255])
+        lower_color = np.array([70, 75, 75])
+        upper_color = np.array([90, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask
