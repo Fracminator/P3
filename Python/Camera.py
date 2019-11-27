@@ -9,8 +9,8 @@ class Camera:
 
     def __init__(self):
         self.__camera = cv2.VideoCapture(0)
-        self.__camera.set(3, 320)
-        self.__camera.set(4, 240)
+        # self.__camera.set(3, 320)
+        # self.__camera.set(4, 240)
 
     def getFrame(self):
         return self.__camera.read()[1]
@@ -42,7 +42,7 @@ class Camera:
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 0, 255)
         Kernel = np.ones((3, 3), np.uint8)
-        return cv2.erode(frame, Kernel, iterations=10)
+        return cv2.erode(frame, Kernel, iterations=5)
 
     def neighbourfilter3x3(self, frame, mode, mask):
         pixelValues = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -142,8 +142,8 @@ class Camera:
         # upper_color = np.array([70, 255, 255])
 
         # Mikkel's webcam green values
-        lower_color = np.array([70, 100, 100])
-        upper_color = np.array([90, 255, 255])
+        lower_color = np.array([65, 75, 75])
+        upper_color = np.array([95, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask
