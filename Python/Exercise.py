@@ -11,14 +11,16 @@ class Exercise(Scene):
 
     # Overrides superclass update() function
     def update(self):
-        frame = self.camera.getFrameHSV()
-        cv2.imshow('dinmor', frame)
-        mask = self.camera.Masking(frame)
-        cv2.imshow("Mask", self.camera.Masking(frame))
-        avgx, avgy = self.camera.getCenterPixel(mask)
-        self.validate(avgx, avgy, 100, 100)
-        print(self.score)
+        framehsv = self.camera.getFrameHSV()
+        cv2.imshow("HSV", framehsv)
+        mask = self.camera.Masking(framehsv)
+        cv2.imshow("Mask", mask)
+        median = self.camera.medianBlur(mask, 5)
+        cv2.imshow("Median", median)
+        erosion = self.camera.erosion(median, 5)
+        cv2.imshow("Erosion", erosion)
         cv2.waitKey(1)
+
         # self.sceneManager.setActiveScene("Menu")  # sceneManager was inherited from the superclass.
 
     def validate(self, avgx, avgy, ptx, pty):
