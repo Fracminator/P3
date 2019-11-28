@@ -81,7 +81,7 @@ class Menu(Scene):
         self.root.update_idletasks()
         self.root.update()
 
-    def create_circle(sekf,x, y, r, canvasName):  # center coordinates, radius
+    def create_circle(self, x, y, r, canvasName):  # center coordinates, radius
         x0 = x
         y0 = y
         x1 = x + r
