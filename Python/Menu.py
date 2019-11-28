@@ -25,10 +25,10 @@ class Menu(Scene):
         self.image1width = 380
         self.image2height = 467
         self.image2width = 246
-        self.ptx = self.image1x+(self.image1width/2)
-        self.pty = self.image1y+(self.image1height/2)
-        self.ptx1 = self.image2x+(self.image2width/2)
-        self.pty1 = self.image2y+(self.image2height/2)
+        self.ptx = self.image1x + (self.image1width / 2)
+        self.pty = self.image1y + (self.image1height / 2)
+        self.ptx1 = self.image2x + (self.image2width / 2)
+        self.pty1 = self.image2y + (self.image2height / 2)
         self.radius = 30
         self.xscore = 0
         self.yscore = 0
@@ -47,11 +47,11 @@ class Menu(Scene):
         # Can insert custom code here
         framehsv = self.camera.getFrameHSV()
         framemask = self.camera.Masking(framehsv)
-        framehsvmedian = self.camera.medianBlur(framemask,5)
-        framehsvmedianerosion = self.camera.erosion(framehsvmedian,5)
-        cv2.imshow('mask',framemask)
-        cv2.imshow('median',framehsvmedian)
-        cv2.imshow('erosion',framehsvmedianerosion)
+        framehsvmedian = self.camera.medianBlur(framemask, 5)
+        framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)
+        cv2.imshow('mask', framemask)
+        cv2.imshow('median', framehsvmedian)
+        cv2.imshow('erosion', framehsvmedianerosion)
         avgx, avgy = self.camera.getCenterPixel(framehsvmedianerosion)
         avgx = avgx * 2.5
         avgy = avgy * 2.5
