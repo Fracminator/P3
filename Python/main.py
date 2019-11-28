@@ -12,9 +12,9 @@ sceneManager = SceneManager()
 camera = Camera()
 
 
-exerciseScene = Exercise([], sceneManager, camera)
+# exerciseScene = Exercise([], sceneManager, camera)
 menuScene = Menu(sceneManager, camera)
-sceneManager.addScene(exerciseScene, "Exercise")
+# sceneManager.addScene(exerciseScene, "Exercise")
 sceneManager.addScene(menuScene, "Menu")
 sceneManager.setActiveScene("Menu")
 

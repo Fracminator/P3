@@ -4,6 +4,7 @@ from MyCircle import *
 import numpy as np
 import math
 
+
 class Exercise(Scene):
 
     def __init__(self, coordinates, sceneManager, camera):
@@ -135,16 +136,6 @@ class Exercise(Scene):
 
     # Overrides superclass update() function
     def update(self):
-        framehsv = self.camera.getFrameHSV()
-        cv2.imshow("HSV", framehsv)
-        mask = self.camera.Masking(framehsv)
-        cv2.imshow("Mask", mask)
-        median = self.camera.medianBlur(mask, 5)
-        cv2.imshow("Median", median)
-        erosion = self.camera.erosion(median, 5)
-        cv2.imshow("Erosion", erosion)
-        cv2.waitKey(1)
-
         if self.exercise1:
             self.circle.drawOnCanvas(self.window)
             self.circle2.drawOnCanvas(self.window)
@@ -152,6 +143,15 @@ class Exercise(Scene):
             endCount = 0
 
             while self.keepAppRunning:
+                framehsv = self.camera.getFrameHSV()
+                cv2.imshow("HSV", framehsv)
+                mask = self.camera.Masking(framehsv)
+                cv2.imshow("Mask", mask)
+                median = self.camera.medianBlur(mask, 5)
+                cv2.imshow("Median", median)
+                erosion = self.camera.erosion(median, 5)
+                cv2.imshow("Erosion", erosion)
+                cv2.waitKey(1)
                 self.moveCircles()
                 endCount += 0.5
                 if endCount == self.reps:
@@ -161,6 +161,15 @@ class Exercise(Scene):
             self.circle3.drawOnCanvas(self.window)
             self.circle4.drawOnCanvas(self.window)
             while self.keepAppRunning:
+                framehsv = self.camera.getFrameHSV()
+                cv2.imshow("HSV", framehsv)
+                mask = self.camera.Masking(framehsv)
+                cv2.imshow("Mask", mask)
+                median = self.camera.medianBlur(mask, 5)
+                cv2.imshow("Median", median)
+                erosion = self.camera.erosion(median, 5)
+                cv2.imshow("Erosion", erosion)
+                cv2.waitKey(1)
                 self.moveCircles2()
                 break
 

@@ -12,7 +12,7 @@ class Menu(Scene):
         self.camera = camera
         self.width = 1280
         self.height = 720
-        self.root = tk.Tk()
+        self.root = tk.Toplevel()
         self.canvas = Canvas(self.root, height=self.height, width=self.width, bg="white")
         self.img = PhotoImage(file="exe1.png")
         self.img2 = PhotoImage(file="exe2.png")
