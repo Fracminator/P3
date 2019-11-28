@@ -29,7 +29,7 @@ class Menu(Scene):
         self.pty = self.image1y+(self.image1height/2)
         self.ptx1 = self.image2x+(self.image2width/2)
         self.pty1 = self.image2y+(self.image2height/2)
-        self.radius = 10
+        self.radius = 30
         self.xscore = 0
         self.yscore = 0
 
@@ -58,13 +58,18 @@ class Menu(Scene):
         self.create_circle(avgy, avgx, self.radius, self.canvas)
         print(avgy)
         print(avgx)
-        if avgx > self.ptx - 300 and avgx < self.ptx + 300 and avgy > self.pty - 300 and avgy < self.pty + 300:
-            self.xscore+=1
+        xdiff1 = self.image1width / 2
+        ydiff1 = self.image1height / 2
+        xdiff2 = self.image2width / 2
+        ydiff2 = self.image2height / 2
+        if avgx > self.ptx - xdiff1 and avgx < self.ptx + xdiff1 and avgy > self.pty - ydiff1 and avgy < self.pty + ydiff1:
+            self.xscore += 1
             print(self.xscore)
-        if avgx > self.ptx1 - 300 and avgx < self.ptx1 + 300 and avgy > self.pty1 - 300 and avgy < self.pty1 + 300:
-            self.yscore+=1
+        if avgx > self.ptx1 - xdiff2 and avgx < self.ptx1 + xdiff2 and avgy > self.pty1 - ydiff2 and avgy < self.pty1 + ydiff2:
+            self.yscore += 1
             print(self.yscore)
         if self.xscore == 5 or self.yscore == 5:
+            cv2.destroyAllWindows()
             exerciseScene = Exercise([], self.sceneManager, self.camera)
             self.sceneManager.addScene(exerciseScene, "Exercise")
             self.sceneManager.setActiveScene("Exercise")

@@ -33,7 +33,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 8, 0)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 24, 0)
-        Kernel = np.ones((3, 3), np.uint8)
+        Kernel = np.ones((5, 5), np.uint8)
         return cv2.dilate(frame, Kernel, iterations=10)
 
     def erosion(self, frame, kernelsize):
@@ -41,7 +41,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 0, 255)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 0, 255)
-        Kernel = np.ones((3, 3), np.uint8)
+        Kernel = np.ones((5, 5), np.uint8)
         return cv2.erode(frame, Kernel, iterations=5)
 
     def neighbourfilter3x3(self, frame, mode, mask):
@@ -117,11 +117,9 @@ class Camera:
         minx = width
         maxx = 0
 
-        # -----------------------------------------------------------------------
-
-        for y in range(height):
-            for x in range(width):
-                if frame[x, y] == 255:
+        for y in range(int(height / 2)):
+            for x in range(int(width / 2)):
+                if frame[int(x * 2), int(y * 2)] == 255:
                     foundPixel = True
                     if y < miny:
                         miny = y
@@ -144,7 +142,7 @@ class Camera:
     #HSP in range function
     def Masking(self, hsvframe):
         # Frederik's webcam green values
-        #lower_color = np.array([30, 50, 50])
+        # lower_color = np.array([30, 50, 50])
         # upper_color = np.array([70, 255, 255])
 
         # Mikkel's webcam green values
