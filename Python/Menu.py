@@ -1,6 +1,6 @@
 from Scene import Scene
 import tkinter as tk
-from tkinter import*
+from tkinter import *
 import cv2
 from Exercise import Exercise1
 
@@ -12,7 +12,7 @@ class Menu(Scene):
         self.camera = camera
         self.width = 1280
         self.height = 720
-        self.root = tk.Toplevel()
+        self.root = tk.Tk()
         self.canvas = Canvas(self.root, height=self.height, width=self.width, bg="white")
         self.img = PhotoImage(file="exe1.png")
         self.img2 = PhotoImage(file="exe2.png")
