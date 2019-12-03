@@ -2,7 +2,7 @@ from Scene import Scene
 import tkinter as tk
 from tkinter import*
 import cv2
-from Exercise import Exercise
+from Exercise import Exercise1
 
 
 class Menu(Scene):
@@ -70,7 +70,7 @@ class Menu(Scene):
             print(self.yscore)
         if self.xscore == 5 or self.yscore == 5:
             cv2.destroyAllWindows()
-            exerciseScene = Exercise([], self.sceneManager, self.camera)
+            exerciseScene = Exercise1([], self.sceneManager, self.camera)
             self.sceneManager.addScene(exerciseScene, "Exercise")
             self.sceneManager.setActiveScene("Exercise")
             self.canvas.destroy()
