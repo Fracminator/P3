@@ -70,8 +70,10 @@ class Exercise1(Scene):
         cv2.imshow("Frame", output)
         cv2.waitKey(1)
         self.moveCircles()
+        self.validate()
 
 
-    def validate(self, avgx, avgy, ptx, pty):
+    def validate(self):
+
         if avgx > ptx - 25 and avgx < ptx + 25 and avgy > pty - 25 and avgy < pty + 25:
             self.score += 1
