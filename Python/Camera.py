@@ -13,12 +13,14 @@ class Camera:
         # self.__camera.set(4, 240)
 
     def getFrame(self):
-        return self.__camera.read()[1]
+        frame = self.__camera.read()[1]
+
+        return cv2.flip(frame, 1)
 
     def getFrameHSV(self):
         # .read() gives us a tuple, where index 0 is a boolean, and index 1 is the image data.
 
-        frame = self.__camera.read()[1]
+        frame = self.getFrame()
         return cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     def medianBlur(self, frame, kernelsize):
@@ -33,7 +35,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 8, 0)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 24, 0)
-        Kernel = np.ones((5, 5), np.uint8)
+        Kernel = np.ones((kernelsize, kernelsize), np.uint8)
         return cv2.dilate(frame, Kernel, iterations=10)
 
     def erosion(self, frame, kernelsize):
@@ -41,7 +43,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 0, 255)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 0, 255)
-        Kernel = np.ones((5, 5), np.uint8)
+        Kernel = np.ones((kernelsize, kernelsize), np.uint8)
         return cv2.erode(frame, Kernel, iterations=5)
 
     def neighbourfilter3x3(self, frame, mode, mask):
