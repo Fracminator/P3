@@ -16,6 +16,8 @@ class Exercise1(Scene):
         # These four can be changed without destroying anything (hopefully)
         self.leftShoulder = [635, 550]  # The coordinates of both shoulders
         self.rightShoulder = [1000, 550]
+        self.leftCircle = self.leftShoulder.copy()
+        self.rightCircle = self.rightShoulder.copy()
         self.armLength = 400  # The length of the arms
         self.reps = 2  # The amount of repetitions
 
@@ -28,8 +30,8 @@ class Exercise1(Scene):
     def moveCircles(self):
 
         if self.direction == "up":
-            self.leftShoulder[1] -= self.movement
-            self.rightShoulder[1] -= self.movement
+            self.leftCircle[1] -= self.movement
+            self.rightCircle[1] -= self.movement
             self.count += self.movement
 
             if self.count > self.armLength:
@@ -37,8 +39,8 @@ class Exercise1(Scene):
                 self.count = 0
 
         elif self.direction == "down":
-            self.leftShoulder[1] += self.movement
-            self.rightShoulder[1] += self.movement
+            self.leftCircle[1] += self.movement
+            self.rightCircle[1] += self.movement
             self.count += self.movement
 
             if self.count > self.armLength:
@@ -53,10 +55,10 @@ class Exercise1(Scene):
         frame = cv2.resize(frame, (1600, 900))
         overlay = frame.copy()
 
-        xLeft = int(self.leftShoulder[0])
-        yLeft = int(self.leftShoulder[1])
-        xRight = int(self.rightShoulder[0])
-        yRight = int(self.rightShoulder[1])
+        xLeft = int(self.leftCircle[0])
+        yLeft = int(self.leftCircle[1])
+        xRight = int(self.rightCircle[0])
+        yRight = int(self.rightCircle[1])
 
         self.radius = 75
 
@@ -81,11 +83,11 @@ class Exercise1(Scene):
     def validate(self):
         # Left shoulder
         flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
-        if avgx > self.leftShoulder[0] - self.radius and avgx < self.leftShoulder[0] + self.radius and avgy > self.leftShoulder[1] - self.radius and avgy < self.leftShoulder[1] + self.radius:
+        if avgx > self.leftCircle[0] - self.radius and avgx < self.leftCircle[0] + self.radius and avgy > self.leftCircle[1] - self.radius and avgy < self.leftCircle[1] + self.radius:
             self.score += 1
             print(self.score)
 
         # Right shoulder
-        if avgx > self.rightShoulder[0] - self.radius and avgx < self.rightShoulder[0] + self.radius and avgy > self.rightShoulder[1] - self.radius and avgy < self.rightShoulder[1] + self.radius:
+        if avgx > self.rightCircle[0] - self.radius and avgx < self.rightCircle[0] + self.radius and avgy > self.rightCircle[1] - self.radius and avgy < self.rightCircle[1] + self.radius:
             self.score += 1
             print(self.score)

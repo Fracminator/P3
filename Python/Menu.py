@@ -76,9 +76,17 @@ class Menu(Scene):
             self.yscore += 1
             print(self.yscore)
 
-        if self.xscore == 5 or self.yscore == 5:
+        if self.xscore == 5:
             cv2.destroyAllWindows()
             exerciseScene = Exercise1([], self.sceneManager, self.camera)
+            self.sceneManager.addScene(exerciseScene, "Exercise")
+            self.sceneManager.setActiveScene("Exercise")
+            self.canvas.destroy()
+            self.root.destroy()
+            return
+        elif self.yscore == 5:
+            cv2.destroyAllWindows()
+            exerciseScene = Exercise2([], self.sceneManager, self.camera)
             self.sceneManager.addScene(exerciseScene, "Exercise")
             self.sceneManager.setActiveScene("Exercise")
             self.canvas.destroy()
