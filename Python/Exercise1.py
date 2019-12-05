@@ -2,6 +2,7 @@ from Scene import Scene
 import cv2
 import math
 import time
+from win32 import win32gui
 
 
 class Exercise1(Scene):
@@ -57,15 +58,19 @@ class Exercise1(Scene):
         xRight = int(self.rightShoulder[0])
         yRight = int(self.rightShoulder[1])
 
-        size = 75
+        self.radius = 75
 
         # cv2.circle(image, (x, y), size, (B, G, R), thickness, linetype, shift)
-        cv2.circle(overlay, (xLeft, yLeft), size, (0, 255, 0), thickness=-1, lineType=8, shift=0)
-        cv2.circle(overlay, (xRight, yRight), size, (0, 255, 0), thickness=-1, lineType=8, shift=0)
+        cv2.circle(overlay, (xLeft, yLeft), self.radius, (0, 255, 0), thickness=-1, lineType=8, shift=0)
+        cv2.circle(overlay, (xRight, yRight), self.radius, (0, 255, 0), thickness=-1, lineType=8, shift=0)
         output = cv2.addWeighted(overlay, 0.4, frame, 0.6, 0)
 
-        cv2.circle(output, (xLeft, yLeft), size, (0, 255, 0), thickness=6, lineType=8, shift=0)
-        cv2.circle(output, (xRight, yRight), size, (0, 255, 0), thickness=6, lineType=8, shift=0)
+        cv2.circle(output, (xLeft, yLeft), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
+        cv2.circle(output, (xRight, yRight), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
+
+        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
+        cv2.circle(output, (avgx, avgy), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
+
 
         cv2.imshow("Frame", output)
         cv2.waitKey(1)
@@ -74,6 +79,13 @@ class Exercise1(Scene):
 
 
     def validate(self):
-
-        if avgx > ptx - 25 and avgx < ptx + 25 and avgy > pty - 25 and avgy < pty + 25:
+        # Left shoulder
+        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
+        if avgx > self.leftShoulder[0] - self.radius and avgx < self.leftShoulder[0] + self.radius and avgy > self.leftShoulder[1] - self.radius and avgy < self.leftShoulder[1] + self.radius:
             self.score += 1
+            print(self.score)
+
+        # Right shoulder
+        if avgx > self.rightShoulder[0] - self.radius and avgx < self.rightShoulder[0] + self.radius and avgy > self.rightShoulder[1] - self.radius and avgy < self.rightShoulder[1] + self.radius:
+            self.score += 1
+            print(self.score)

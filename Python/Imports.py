@@ -1,5 +1,5 @@
 from Camera import Camera
-from Exercise import Exercise
+from Exercise1 import Exercise
 from InputManager import InputManager
 from Menu import Menu
 from Scene import Scene

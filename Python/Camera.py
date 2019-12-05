@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import math
+from win32 import win32gui
 
 # FPS rate needs to be faster - to be continued ;-)
 
@@ -13,7 +14,8 @@ class Camera:
         # self.__camera.set(4, 240)
 
     def getFrame(self):
-        frame = self.__camera.read()[1]
+        # frame = self.__camera.read()[1]
+        frame = cv2.imread("input.png")
 
         return cv2.flip(frame, 1)
 
@@ -111,7 +113,8 @@ class Camera:
                     frameOutput[x][y] = pixelValues[mode]  # The median value.
 
         return frameOutput
-    def getCenterPixel(self,frame):
+
+    def getCenterPixel(self, frame):
         foundPixel = False
         width, height = frame.shape
         miny = height
@@ -140,6 +143,14 @@ class Camera:
             avgy = 0
 
         return avgx, avgy
+
+    def getCenterPixelCV(self, frame):
+        # Might work, might not.
+        M = cv2.moments(frame)
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+
+        return cX, cY
 
     #HSP in range function
     def Masking(self, hsvframe):
