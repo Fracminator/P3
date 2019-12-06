@@ -10,8 +10,8 @@ class Camera:
 
     def __init__(self):
         self.__camera = cv2.VideoCapture(0)
-        # self.__camera.set(3, 320)
-        # self.__camera.set(4, 240)
+        self.__camera.set(3, 1280)
+        self.__camera.set(4, 720)
 
     def getFrame(self):
         frame = self.__camera.read()[1]
@@ -159,12 +159,12 @@ class Camera:
     #HSP in range function
     def Masking(self, hsvframe):
         # Frederik's webcam green values
-        # lower_color = np.array([30, 50, 50])
-        # upper_color = np.array([70, 255, 255])
+        lower_color = np.array([30, 50, 50])
+        upper_color = np.array([70, 255, 255])
 
         # Mikkel's webcam green values
-        lower_color = np.array([65, 75, 75])
-        upper_color = np.array([95, 255, 255])
+        # lower_color = np.array([65, 75, 75])
+        # upper_color = np.array([95, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask

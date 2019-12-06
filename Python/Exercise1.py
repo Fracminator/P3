@@ -55,7 +55,7 @@ class Exercise1(Scene):
         width, height, channels = frame.shape
         multiplierX = 1600 / width
         multiplierY = 900 / height
-        frame = cv2.resize(frame, (1600, 900))
+        frame = cv2.resize(frame, (1280, 720))
         overlay = frame.copy()
 
         framehsv = self.camera.getFrameHSV()
@@ -67,8 +67,8 @@ class Exercise1(Scene):
         cv2.imshow('median', framehsvmedian)
         cv2.imshow('erosion', framehsvmedianerosion)
         self.avgx, self.avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
-        self.avgx = int(self.avgx * multiplierX)
-        self.avgy = int(self.avgy * multiplierY)
+        # self.avgx = int(self.avgx * multiplierX)
+        # self.avgy = int(self.avgy * multiplierY)
 
         xLeft = int(self.leftCircle[0])
         yLeft = int(self.leftCircle[1])
