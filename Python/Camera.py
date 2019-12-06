@@ -14,8 +14,8 @@ class Camera:
         # self.__camera.set(4, 240)
 
     def getFrame(self):
-        # frame = self.__camera.read()[1]
-        frame = cv2.imread("input.png")
+        frame = self.__camera.read()[1]
+        # frame = cv2.imread("input.png")
 
         return cv2.flip(frame, 1)
 
@@ -147,8 +147,12 @@ class Camera:
     def getCenterPixelCV(self, frame):
         # Might work, might not.
         M = cv2.moments(frame)
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
+        try:
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
+        except:
+            cX = 0
+            cY = 0
 
         return cX, cY
 

@@ -38,6 +38,7 @@ class Menu(Scene):
         self.radius = 30
         self.xscore = 0
         self.yscore = 0
+        self.scorethreshold = 100
 
     def setupScene(self):
         self.canvas.pack()
@@ -56,11 +57,12 @@ class Menu(Scene):
         framemask = self.camera.Masking(framehsv)
         framehsvmedian = self.camera.medianBlur(framemask, 5)
         framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)
-        #cv2.imshow('mask', framemask)
-        #cv2.imshow('median', framehsvmedian)
-        #cv2.imshow('erosion', framehsvmedianerosion)
-        # avgx, avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
-        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
+        cv2.imshow('hsv', framehsv)
+        cv2.imshow('mask', framemask)
+        cv2.imshow('median', framehsvmedian)
+        cv2.imshow('erosion', framehsvmedianerosion)
+        avgx, avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
+        # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         # avgx = avgx * 2.5
         # avgy = avgy * 2.5
         self.canvas.move(self.circle, avgx, avgy)
@@ -76,7 +78,7 @@ class Menu(Scene):
             self.yscore += 1
             print(self.yscore)
 
-        if self.xscore == 5:
+        if self.xscore == self.scorethreshold:
             cv2.destroyAllWindows()
             exerciseScene = Exercise1([], self.sceneManager, self.camera)
             self.sceneManager.addScene(exerciseScene, "Exercise")
@@ -84,7 +86,7 @@ class Menu(Scene):
             self.canvas.destroy()
             self.root.destroy()
             return
-        elif self.yscore == 5:
+        elif self.yscore == self.scorethreshold:
             cv2.destroyAllWindows()
             exerciseScene = Exercise2([], self.sceneManager, self.camera)
             self.sceneManager.addScene(exerciseScene, "Exercise")
