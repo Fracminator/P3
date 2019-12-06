@@ -2,7 +2,6 @@ from Scene import Scene
 import cv2
 import numpy as np
 import math
-import time
 from win32 import win32gui
 
 # TODO: While making this, inaccurately assumed that the circles were placed in the shoulders, as with exercise1. This means all of this is wrong, as they're placed in shoulder +/- armlength.
