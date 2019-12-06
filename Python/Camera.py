@@ -15,14 +15,36 @@ class Camera:
 
     def getFrame(self):
         frame = self.__camera.read()[1]
-        # frame = cv2.imread("input.png")
+        frame = cv2.resize(frame, (1280, 720))
 
         return cv2.flip(frame, 1)
 
-    def getFrameHSV(self):
-        # .read() gives us a tuple, where index 0 is a boolean, and index 1 is the image data.
+    def getFrameLeft(self):
+        frame = self.__camera.read()[1]
+        frame = cv2.resize(frame, (1280, 720))
+        frame = cv2.flip(frame, 1)
+        # Top left
+        start_row, start_col = int(0), int(0)
+        # Bottom right
+        end_row, end_col = int(720), int(1280 / 2)
+        frame = frame[start_row:end_row, start_col:end_col]
 
-        frame = self.getFrame()
+        return frame
+
+    def getFrameRight(self):
+        frame = self.__camera.read()[1]
+        frame = cv2.resize(frame, (1280, 720))
+        frame = cv2.flip(frame, 1)
+        # Top left
+        start_row, start_col = int(0), int(1280 / 2)
+        # Bottom right
+        end_row, end_col = int(720), int(1280)
+        frame = frame[start_row:end_row, start_col:end_col]
+
+        return frame
+
+
+    def convertToHSV(self, frame):
         return cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     def medianBlur(self, frame, kernelsize):
@@ -159,12 +181,12 @@ class Camera:
     #HSP in range function
     def Masking(self, hsvframe):
         # Frederik's webcam green values
-        lower_color = np.array([30, 50, 50])
-        upper_color = np.array([70, 255, 255])
+        # lower_color = np.array([30, 50, 50])
+        # upper_color = np.array([70, 255, 255])
 
         # Mikkel's webcam green values
-        # lower_color = np.array([65, 75, 75])
-        # upper_color = np.array([95, 255, 255])
+        lower_color = np.array([65, 75, 75])
+        upper_color = np.array([95, 255, 255])
 
         mask = cv2.inRange(hsvframe, lower_color, upper_color)
         return mask

@@ -130,7 +130,7 @@ class Exercise2(Scene):
 
         # frame = self.camera.getFrame()
         frame = self.camera.getFrame()
-        frame = cv2.resize(frame, (1600, 900))
+        frame = cv2.resize(frame, (1280, 720))
         overlay = frame.copy()
 
         xLeft = int(self.leftCircle[0])

@@ -38,7 +38,7 @@ class Menu(Scene):
         self.radius = 30
         self.xscore = 0
         self.yscore = 0
-        self.scorethreshold = 100
+        self.scorethreshold = 50
 
     def setupScene(self):
         self.canvas.pack()
@@ -53,7 +53,8 @@ class Menu(Scene):
     # Overrides superclass update() function
     def update(self):
         # Can insert custom code here
-        framehsv = self.camera.getFrameHSV()
+        frame = self.camera.getFrame()
+        framehsv = self.camera.convertToHSV(frame)
         framemask = self.camera.Masking(framehsv)
         framehsvmedian = self.camera.medianBlur(framemask, 5)
         framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)

@@ -14,8 +14,8 @@ class Exercise1(Scene):
         # Properties
 
         # These four can be changed without destroying anything (hopefully)
-        self.leftShoulder = [635, 550]  # The coordinates of both shoulders
-        self.rightShoulder = [1000, 550]
+        self.leftShoulder = [508, 420]  # The coordinates of both shoulders
+        self.rightShoulder = [800, 420]
         self.leftCircle = self.leftShoulder.copy()
         self.rightCircle = self.rightShoulder.copy()
         self.armLength = 400  # The length of the arms
@@ -53,22 +53,32 @@ class Exercise1(Scene):
         # frame = self.camera.getFrame()
         frame = self.camera.getFrame()
         width, height, channels = frame.shape
-        multiplierX = 1600 / width
-        multiplierY = 900 / height
-        frame = cv2.resize(frame, (1280, 720))
         overlay = frame.copy()
 
-        framehsv = self.camera.getFrameHSV()
-        framemask = self.camera.Masking(framehsv)
-        framehsvmedian = self.camera.medianBlur(framemask, 5)
-        framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)
-        cv2.imshow('hsv', framehsv)
-        cv2.imshow('mask', framemask)
-        cv2.imshow('median', framehsvmedian)
-        cv2.imshow('erosion', framehsvmedianerosion)
-        self.avgx, self.avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
-        # self.avgx = int(self.avgx * multiplierX)
-        # self.avgy = int(self.avgy * multiplierY)
+        # left
+        frameLeft = self.camera.getFrameLeft()
+        frameLeft = self.camera.convertToHSV(frameLeft)
+        frameLeft = self.camera.Masking(frameLeft)
+        frameLeft = self.camera.medianBlur(frameLeft, 5)
+        frameLeft = self.camera.erosion(frameLeft, 5)
+        # cv2.imshow('hsv', framehsv)
+        # cv2.imshow('mask', framemask)
+        # cv2.imshow('median', framehsvmedian)
+        cv2.imshow('erosion left', frameLeft)
+        self.avgxLeft, self.avgyLeft = self.camera.getCenterPixelCV(frameLeft)
+
+        # right
+        frameRight = self.camera.getFrameRight()
+        frameRight = self.camera.convertToHSV(frameRight)
+        frameRight = self.camera.Masking(frameRight)
+        frameRight = self.camera.medianBlur(frameRight, 5)
+        frameRight = self.camera.erosion(frameRight, 5)
+        # cv2.imshow('hsv', framehsv)
+        # cv2.imshow('mask', framemask)
+        # cv2.imshow('median', framehsvmedian)
+        cv2.imshow('erosion right', frameRight)
+        self.avgxRight, self.avgyRight = self.camera.getCenterPixelCV(frameRight)
+        self.avgxRight = int(self.avgxRight + (1280 / 2))
 
         xLeft = int(self.leftCircle[0])
         yLeft = int(self.leftCircle[1])
@@ -86,7 +96,8 @@ class Exercise1(Scene):
         cv2.circle(output, (xRight, yRight), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
 
         # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
-        cv2.circle(output, (self.avgx, self.avgy), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
+        cv2.circle(output, (self.avgxLeft, self.avgyLeft), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
+        cv2.circle(output, (self.avgxRight, self.avgyRight), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
 
 
         cv2.imshow("Frame", output)
@@ -95,13 +106,17 @@ class Exercise1(Scene):
         self.validate()
 
     def validate(self):
+        left = False
+        right = False
         # Left shoulder
         # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
-        if self.avgx > self.leftCircle[0] - self.radius and self.avgx < self.leftCircle[0] + self.radius and self.avgy > self.leftCircle[1] - self.radius and self.avgy < self.leftCircle[1] + self.radius:
-            self.score += 1
-            print("Score: " + str(self.score))
+        if self.avgxLeft > self.leftCircle[0] - self.radius and self.avgxLeft < self.leftCircle[0] + self.radius and self.avgyLeft > self.leftCircle[1] - self.radius and self.avgyLeft < self.leftCircle[1] + self.radius:
+            left = True
 
         # Right shoulder
-        if self.avgx > self.rightCircle[0] - self.radius and self.avgx < self.rightCircle[0] + self.radius and self.avgy > self.rightCircle[1] - self.radius and self.avgy < self.rightCircle[1] + self.radius:
+        if self.avgxRight > self.rightCircle[0] - self.radius and self.avgxRight < self.rightCircle[0] + self.radius and self.avgyRight > self.rightCircle[1] - self.radius and self.avgyRight < self.rightCircle[1] + self.radius:
+            right = True
+
+        if left and right:
             self.score += 1
             print("Score: " + str(self.score))
