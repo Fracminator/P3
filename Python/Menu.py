@@ -4,7 +4,6 @@ from tkinter import *
 import cv2
 from Exercise1 import Exercise1
 from Exercise2 import Exercise2
-from win32 import win32gui
 
 
 class Menu(Scene):
@@ -15,6 +14,7 @@ class Menu(Scene):
         self.width = 1280
         self.height = 720
         self.root = tk.Tk()
+        self.root.geometry("+0+0")
         self.canvas = Canvas(self.root, height=self.height, width=self.width, bg="white")
         self.img = PhotoImage(file="exe1.png")
         self.img2 = PhotoImage(file="exe2.png")
@@ -58,10 +58,7 @@ class Menu(Scene):
         framemask = self.camera.Masking(framehsv)
         framehsvmedian = self.camera.medianBlur(framemask, 5)
         framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)
-        cv2.imshow('hsv', framehsv)
-        cv2.imshow('mask', framemask)
-        cv2.imshow('median', framehsvmedian)
-        cv2.imshow('erosion', framehsvmedianerosion)
+        # cv2.imshow('hsv', framehsv); cv2.imshow('mask', framemask); cv2.imshow('median', framehsvmedian); cv2.imshow('erosion', framehsvmedianerosion)
         avgx, avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
         # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         # avgx = avgx * 2.5
@@ -81,20 +78,18 @@ class Menu(Scene):
 
         if self.xscore == self.scorethreshold:
             cv2.destroyAllWindows()
-            exerciseScene = Exercise1([], self.sceneManager, self.camera)
-            self.sceneManager.addScene(exerciseScene, "Exercise")
-            self.sceneManager.setActiveScene("Exercise")
-            self.canvas.destroy()
-            self.root.destroy()
-            return
+            self.sceneManager.setActiveScene("Exercise1")
+            # self.canvas.destroy()
+            # self.root.destroy()
+            self.xscore = self.yscore = 0
+            # return
         elif self.yscore == self.scorethreshold:
             cv2.destroyAllWindows()
-            exerciseScene = Exercise2([], self.sceneManager, self.camera)
-            self.sceneManager.addScene(exerciseScene, "Exercise")
-            self.sceneManager.setActiveScene("Exercise")
-            self.canvas.destroy()
-            self.root.destroy()
-            return
+            self.sceneManager.setActiveScene("Exercise2")
+            # self.canvas.destroy()
+            # self.root.destroy()
+            self.xscore = self.yscore = 0
+            # return
 
         self.canvas.update_idletasks()
         self.root.update_idletasks()

@@ -2,8 +2,6 @@ from Scene import Scene
 import cv2
 import numpy as np
 import math
-from win32 import win32gui
-
 # TODO: While making this, inaccurately assumed that the circles were placed in the shoulders, as with exercise1. This means all of this is wrong, as they're placed in shoulder +/- armlength.
 # fix :(
 
@@ -147,7 +145,6 @@ class Exercise2(Scene):
         cv2.circle(output, (xLeft, yLeft), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
         cv2.circle(output, (xRight, yRight), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
 
-        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         cv2.circle(output, (avgx, avgy), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
 
 
@@ -159,7 +156,6 @@ class Exercise2(Scene):
 
     def validate(self):
         # Left shoulder
-        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         if avgx > self.leftCircle[0] - self.radius and avgx < self.leftCircle[0] + self.radius and avgy > self.leftCircle[1] - self.radius and avgy < self.leftCircle[1] + self.radius:
             self.score += 1
             print(self.score)

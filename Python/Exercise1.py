@@ -1,8 +1,6 @@
 from Scene import Scene
 import cv2
-import math
-import time
-from win32 import win32gui
+from Menu import Menu
 
 
 class Exercise1(Scene):
@@ -11,6 +9,7 @@ class Exercise1(Scene):
         super().__init__(sceneManager, camera)  # Call the initializing function of the superclass, aka Scene.
         self.coordinates = coordinates
         self.score = 0
+        self.maxScore = 0
         # Properties
 
         # These four can be changed without destroying anything (hopefully)
@@ -19,13 +18,21 @@ class Exercise1(Scene):
         self.leftCircle = self.leftShoulder.copy()
         self.rightCircle = self.rightShoulder.copy()
         self.armLength = 400  # The length of the arms
-        self.reps = 2  # The amount of repetitions
+        self.repsMax = 2  # The amount of repetitions
+        self.repsCurrent = 0
 
         self.direction = "up"
-        self.keepAppRunning = True
+        self.hasStarted = False
 
-        self.movement = 5
+        self.movement = 20  # Default value is 5
         self.count = 0
+
+    def reset(self):
+        self.repsCurrent = 0
+        self.hasStarted = False
+        self.score = 0
+        self.maxScore = 0
+
 
     def moveCircles(self):
 
@@ -46,13 +53,18 @@ class Exercise1(Scene):
             if self.count > self.armLength:
                 self.direction = "up"
                 self.count = 0
+                self.repsCurrent += 1
+                if self.repsCurrent == self.repsMax:
+                    cv2.destroyAllWindows()
+                    self.reset()
+                    self.sceneManager.setActiveScene("Menu")
+                    return
 
     # Overrides superclass update() function
     def update(self):
 
         # frame = self.camera.getFrame()
         frame = self.camera.getFrame()
-        width, height, channels = frame.shape
         overlay = frame.copy()
 
         # left
@@ -65,7 +77,7 @@ class Exercise1(Scene):
         # cv2.imshow('mask', framemask)
         # cv2.imshow('median', framehsvmedian)
         cv2.imshow('erosion left', frameLeft)
-        self.avgxLeft, self.avgyLeft = self.camera.getCenterPixelCV(frameLeft)
+        avgxLeft, avgyLeft = self.camera.getCenterPixelCV(frameLeft)
 
         # right
         frameRight = self.camera.getFrameRight()
@@ -77,8 +89,8 @@ class Exercise1(Scene):
         # cv2.imshow('mask', framemask)
         # cv2.imshow('median', framehsvmedian)
         cv2.imshow('erosion right', frameRight)
-        self.avgxRight, self.avgyRight = self.camera.getCenterPixelCV(frameRight)
-        self.avgxRight = int(self.avgxRight + (1280 / 2))
+        avgxRight, avgyRight = self.camera.getCenterPixelCV(frameRight)
+        avgxRight = int(avgxRight + (1280 / 2))
 
         xLeft = int(self.leftCircle[0])
         yLeft = int(self.leftCircle[1])
@@ -96,27 +108,37 @@ class Exercise1(Scene):
         cv2.circle(output, (xRight, yRight), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
 
         # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
-        cv2.circle(output, (self.avgxLeft, self.avgyLeft), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
-        cv2.circle(output, (self.avgxRight, self.avgyRight), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
+        cv2.circle(output, (avgxLeft, avgyLeft), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
+        cv2.circle(output, (avgxRight, avgyRight), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
 
 
+        cv2.namedWindow("Frame")
+        cv2.moveWindow("Frame", 0, 0)
         cv2.imshow("Frame", output)
         cv2.waitKey(1)
-        self.moveCircles()
-        self.validate()
 
-    def validate(self):
+        if self.hasStarted:
+            self.moveCircles()
+            if self.validate():  # If the user successfully has their hands inside of the circles, the score increases.
+                self.score += 1
+                print("Score: " + str(self.score))
+
+            self.maxScore += 1  # Max Score should count up regardless of the users success.
+
+        else:
+            if self.validate(avgxLeft, avgxRight, avgyLeft, avgyRight):
+                self.hasStarted = True
+
+    def validate(self, avgxLeft, avgxRight, avgyLeft, avgyRight):
         left = False
         right = False
+
         # Left shoulder
-        # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
-        if self.avgxLeft > self.leftCircle[0] - self.radius and self.avgxLeft < self.leftCircle[0] + self.radius and self.avgyLeft > self.leftCircle[1] - self.radius and self.avgyLeft < self.leftCircle[1] + self.radius:
+        if avgxLeft > self.leftCircle[0] - self.radius and avgxLeft < self.leftCircle[0] + self.radius and avgyLeft > self.leftCircle[1] - self.radius and avgyLeft < self.leftCircle[1] + self.radius:
             left = True
 
         # Right shoulder
-        if self.avgxRight > self.rightCircle[0] - self.radius and self.avgxRight < self.rightCircle[0] + self.radius and self.avgyRight > self.rightCircle[1] - self.radius and self.avgyRight < self.rightCircle[1] + self.radius:
+        if avgxRight > self.rightCircle[0] - self.radius and avgxRight < self.rightCircle[0] + self.radius and avgyRight > self.rightCircle[1] - self.radius and avgyRight < self.rightCircle[1] + self.radius:
             right = True
 
-        if left and right:
-            self.score += 1
-            print("Score: " + str(self.score))
+        return left == right == True

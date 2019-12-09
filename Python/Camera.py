@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import math
-from win32 import win32gui
 
 # FPS rate needs to be faster - to be continued ;-)
 
