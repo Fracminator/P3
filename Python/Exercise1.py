@@ -111,6 +111,17 @@ class Exercise1(Scene):
         cv2.circle(output, (avgxLeft, avgyLeft), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
         cv2.circle(output, (avgxRight, avgyRight), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
 
+        if self.maxScore is not 0:
+            scorePercentage = int(self.score / self.maxScore * 100)
+        else:
+            scorePercentage = 100
+
+        cv2.putText(output, "Score: " + str(scorePercentage) + "%",
+                    (0, 720),  # Bottom left corner of text
+                    cv2.FONT_HERSHEY_SIMPLEX,  # Font
+                    1,  # Font scale
+                    (255, 255, 255),  # Font color
+                    2)  # Line type
 
         cv2.namedWindow("Frame")
         cv2.moveWindow("Frame", 0, 0)
@@ -119,7 +130,7 @@ class Exercise1(Scene):
 
         if self.hasStarted:
             self.moveCircles()
-            if self.validate():  # If the user successfully has their hands inside of the circles, the score increases.
+            if self.validate(avgxLeft, avgxRight, avgyLeft, avgyRight):  # If the user successfully has their hands inside of the circles, the score increases.
                 self.score += 1
                 print("Score: " + str(self.score))
 

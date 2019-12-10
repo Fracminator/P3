@@ -4,6 +4,7 @@ from tkinter import *
 import cv2
 from Exercise1 import Exercise1
 from Exercise2 import Exercise2
+from win32 import win32gui
 
 
 class Menu(Scene):
@@ -60,7 +61,7 @@ class Menu(Scene):
         framehsvmedianerosion = self.camera.erosion(framehsvmedian, 5)
         # cv2.imshow('hsv', framehsv); cv2.imshow('mask', framemask); cv2.imshow('median', framehsvmedian); cv2.imshow('erosion', framehsvmedianerosion)
         avgx, avgy = self.camera.getCenterPixelCV(framehsvmedianerosion)
-        # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
+        flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         # avgx = avgx * 2.5
         # avgy = avgy * 2.5
         self.canvas.move(self.circle, avgx, avgy)

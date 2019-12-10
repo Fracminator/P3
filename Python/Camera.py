@@ -19,9 +19,7 @@ class Camera:
         return cv2.flip(frame, 1)
 
     def getFrameLeft(self):
-        frame = self.__camera.read()[1]
-        frame = cv2.resize(frame, (1280, 720))
-        frame = cv2.flip(frame, 1)
+        frame = self.getFrame()
         # Top left
         start_row, start_col = int(0), int(0)
         # Bottom right
@@ -31,9 +29,7 @@ class Camera:
         return frame
 
     def getFrameRight(self):
-        frame = self.__camera.read()[1]
-        frame = cv2.resize(frame, (1280, 720))
-        frame = cv2.flip(frame, 1)
+        frame = self.getFrame()
         # Top left
         start_row, start_col = int(0), int(1280 / 2)
         # Bottom right
