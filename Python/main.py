@@ -1,7 +1,8 @@
 from SceneManager import SceneManager
 from Camera import Camera
-from Exercise import Exercise
 from Menu import Menu
+from Exercise1 import Exercise1
+from Exercise2 import Exercise2
 
 
 
@@ -12,10 +13,14 @@ sceneManager = SceneManager()
 camera = Camera()
 
 
-exerciseScene = Exercise([], sceneManager, camera)
+# exerciseScene = Exercise([], sceneManager, camera)
 menuScene = Menu(sceneManager, camera)
-sceneManager.addScene(exerciseScene, "Exercise")
+exercise1Scene = Exercise1([], sceneManager, camera)
+exercise2Scene = Exercise2([], sceneManager, camera)
+# sceneManager.addScene(exerciseScene, "Exercise")
 sceneManager.addScene(menuScene, "Menu")
+sceneManager.addScene(exercise1Scene, "Exercise1")
+sceneManager.addScene(exercise2Scene, "Exercise2")
 sceneManager.setActiveScene("Menu")
 
 

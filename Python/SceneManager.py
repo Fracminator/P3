@@ -17,6 +17,12 @@ class SceneManager:
                 return
         print("ERROR: setActiveScene failed, as the specified scene is not part of the scene list. Did you forgot to run .addScene(scene) on it?")
 
+    def removeScene(self, sceneName):
+        for i in range(0, len(self.__scenes) - 1):
+            if self.__scenes[i][1] == sceneName:
+                self.__scenes.pop(i)
+        print(self.__scenes)
+
     def getActiveScene(self):
         return self.__activeScene
 

@@ -9,16 +9,37 @@ class Camera:
 
     def __init__(self):
         self.__camera = cv2.VideoCapture(0)
-        # self.__camera.set(3, 320)
-        # self.__camera.set(4, 240)
+        self.__camera.set(3, 1280)
+        self.__camera.set(4, 720)
 
     def getFrame(self):
-        return self.__camera.read()[1]
-
-    def getFrameHSV(self):
-        # .read() gives us a tuple, where index 0 is a boolean, and index 1 is the image data.
-
         frame = self.__camera.read()[1]
+        frame = cv2.resize(frame, (1280, 720))
+
+        return cv2.flip(frame, 1)
+
+    def getFrameLeft(self):
+        frame = self.getFrame()
+        # Top left
+        start_row, start_col = int(0), int(0)
+        # Bottom right
+        end_row, end_col = int(720), int(1280 / 2)
+        frame = frame[start_row:end_row, start_col:end_col]
+
+        return frame
+
+    def getFrameRight(self):
+        frame = self.getFrame()
+        # Top left
+        start_row, start_col = int(0), int(1280 / 2)
+        # Bottom right
+        end_row, end_col = int(720), int(1280)
+        frame = frame[start_row:end_row, start_col:end_col]
+
+        return frame
+
+
+    def convertToHSV(self, frame):
         return cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     def medianBlur(self, frame, kernelsize):
@@ -33,7 +54,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 8, 0)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 24, 0)
-        Kernel = np.ones((5, 5), np.uint8)
+        Kernel = np.ones((kernelsize, kernelsize), np.uint8)
         return cv2.dilate(frame, Kernel, iterations=10)
 
     def erosion(self, frame, kernelsize):
@@ -41,7 +62,7 @@ class Camera:
         #      return self.neighbourfilter3x3(frame, 0, 255)
         #  elif kernelsize == 5:
         #      return self.neighbourfilter5x5(frame, 0, 255)
-        Kernel = np.ones((5, 5), np.uint8)
+        Kernel = np.ones((kernelsize, kernelsize), np.uint8)
         return cv2.erode(frame, Kernel, iterations=5)
 
     def neighbourfilter3x3(self, frame, mode, mask):
@@ -109,7 +130,8 @@ class Camera:
                     frameOutput[x][y] = pixelValues[mode]  # The median value.
 
         return frameOutput
-    def getCenterPixel(self,frame):
+
+    def getCenterPixel(self, frame):
         foundPixel = False
         width, height = frame.shape
         miny = height
@@ -138,6 +160,18 @@ class Camera:
             avgy = 0
 
         return avgx, avgy
+
+    def getCenterPixelCV(self, frame):
+        # Might work, might not.
+        M = cv2.moments(frame)
+        try:
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
+        except:
+            cX = 0
+            cY = 0
+
+        return cX, cY
 
     #HSP in range function
     def Masking(self, hsvframe):
