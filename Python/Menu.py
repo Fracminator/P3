@@ -49,7 +49,7 @@ class Menu(Scene):
         label2.place(x=400, y=75)
         self.canvas.create_image(170, 260, anchor=NW, image=self.img)
         self.canvas.create_image(840, 225, anchor=NW, image=self.img2)
-        self.circle = self.create_circle(0, 0, 30, self.canvas)
+        self.circle = self.canvas.create_oval(0, 0, 30, 30)
 
     # Overrides superclass update() function
     def update(self):
@@ -96,12 +96,5 @@ class Menu(Scene):
         self.root.update_idletasks()
         self.root.update()
         self.canvas.move(self.circle, -avgx, -avgy)
-
-    def create_circle(self, x, y, r, canvasName):  # center coordinates, radius
-        x0 = x
-        y0 = y
-        x1 = x + r
-        y1 = y + r
-        return canvasName.create_oval(x0, y0, x1, y1)
 
 

@@ -1,13 +1,11 @@
 from Scene import Scene
 import cv2
-from Menu import Menu
 
 
 class Exercise1(Scene):
 
-    def __init__(self, coordinates, sceneManager, camera):
+    def __init__(self, sceneManager, camera):
         super().__init__(sceneManager, camera)  # Call the initializing function of the superclass, aka Scene.
-        self.coordinates = coordinates
         self.score = 0
         self.maxScore = 0
         # Properties

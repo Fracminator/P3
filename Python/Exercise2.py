@@ -7,9 +7,8 @@ import math
 
 class Exercise2(Scene):
 
-    def __init__(self, coordinates, sceneManager, camera):
+    def __init__(self, sceneManager, camera):
         super().__init__(sceneManager, camera)  # Call the initializing function of the superclass, aka Scene.
-        self.coordinates = coordinates
         self.score = 0
         # Properties
 
