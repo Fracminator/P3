@@ -8,12 +8,12 @@ import math
 class Camera:
 
     def __init__(self):
-        self.__camera = cv2.VideoCapture(0)
-        self.__camera.set(3, 1280)
-        self.__camera.set(4, 720)
+        self.camera = cv2.VideoCapture(0)
+        self.camera.set(3, 1280)
+        self.camera.set(4, 720)
 
     def getFrame(self):
-        # frame = self.__camera.read()[1]
+        # frame = self.camera.read()[1]
         frame = cv2.imread("input.png")
         frame = cv2.resize(frame, (1280, 720))
 
@@ -163,7 +163,6 @@ class Camera:
         return avgx, avgy
 
     def getCenterPixelCV(self, frame):
-        # Might work, might not.
         M = cv2.moments(frame)
         try:
             cX = int(M["m10"] / M["m00"])
