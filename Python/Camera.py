@@ -1,9 +1,5 @@
 import cv2
 import numpy as np
-import math
-
-# FPS rate needs to be faster - to be continued ;-)
-
 
 class Camera:
 
@@ -13,8 +9,7 @@ class Camera:
         self.camera.set(4, 720)
 
     def getFrame(self):
-        # frame = self.camera.read()[1]
-        frame = cv2.imread("input.png")
+        frame = self.camera.read()[1]
         frame = cv2.resize(frame, (1280, 720))
 
         return cv2.flip(frame, 1)

@@ -61,7 +61,6 @@ class Exercise1(Scene):
     # Overrides superclass update() function
     def update(self):
 
-        # frame = self.camera.getFrame()
         frame = self.camera.getFrame()
         overlay = frame.copy()
 
@@ -71,10 +70,7 @@ class Exercise1(Scene):
         frameLeft = self.camera.Masking(frameLeft)
         frameLeft = self.camera.medianBlur(frameLeft, 5)
         frameLeft = self.camera.erosion(frameLeft, 5)
-        # cv2.imshow('hsv', framehsv)
-        # cv2.imshow('mask', framemask)
-        # cv2.imshow('median', framehsvmedian)
-        cv2.imshow('erosion left', frameLeft)
+
         avgxLeft, avgyLeft = self.camera.getCenterPixelCV(frameLeft)
 
         # right
@@ -83,10 +79,7 @@ class Exercise1(Scene):
         frameRight = self.camera.Masking(frameRight)
         frameRight = self.camera.medianBlur(frameRight, 5)
         frameRight = self.camera.erosion(frameRight, 5)
-        # cv2.imshow('hsv', framehsv)
-        # cv2.imshow('mask', framemask)
-        # cv2.imshow('median', framehsvmedian)
-        cv2.imshow('erosion right', frameRight)
+
         avgxRight, avgyRight = self.camera.getCenterPixelCV(frameRight)
         avgxRight = int(avgxRight + (1280 / 2))
 
@@ -97,7 +90,6 @@ class Exercise1(Scene):
 
         self.radius = 75
 
-        # cv2.circle(image, (x, y), size, (B, G, R), thickness, linetype, shift)
         cv2.circle(overlay, (xLeft, yLeft), self.radius, (0, 255, 0), thickness=-1, lineType=8, shift=0)
         cv2.circle(overlay, (xRight, yRight), self.radius, (0, 255, 0), thickness=-1, lineType=8, shift=0)
         output = cv2.addWeighted(overlay, 0.4, frame, 0.6, 0)
@@ -105,7 +97,6 @@ class Exercise1(Scene):
         cv2.circle(output, (xLeft, yLeft), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
         cv2.circle(output, (xRight, yRight), self.radius, (0, 255, 0), thickness=6, lineType=8, shift=0)
 
-        # flags, hcursor, (avgx, avgy) = win32gui.GetCursorInfo()
         cv2.circle(output, (avgxLeft, avgyLeft), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
         cv2.circle(output, (avgxRight, avgyRight), 10, (0, 0, 255), thickness=2, lineType=8, shift=0)
 

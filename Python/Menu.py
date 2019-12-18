@@ -2,9 +2,6 @@ from Scene import Scene
 import tkinter as tk
 from tkinter import *
 import cv2
-from Exercise1 import Exercise1
-from Exercise2 import Exercise2
-from win32 import win32gui
 
 
 class Menu(Scene):
