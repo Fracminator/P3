@@ -19,11 +19,11 @@ class Menu(Scene):
         self.canvas = Canvas(self.root, height=self.height, width=self.width, bg="white")
         self.img = PhotoImage(file="exe1.png")
         self.img2 = PhotoImage(file="exe2.png")
-        self.setupScene()
-        self.image1x = 170
+        self.image1x = 740
         self.image1y = 260
-        self.image2x = 840
+        self.image2x = 270
         self.image2y = 225
+        self.setupScene()
         self.image1height = 425
         self.image1width = 380
         self.image2height = 467
@@ -47,8 +47,8 @@ class Menu(Scene):
         label1.place(x=400, y=40)
         label2 = Label(self.root, text="Please select an exercise, by moving your hand:", bg="white", font=("times", 20))
         label2.place(x=400, y=75)
-        self.canvas.create_image(170, 260, anchor=NW, image=self.img)
-        self.canvas.create_image(840, 225, anchor=NW, image=self.img2)
+        self.canvas.create_image(self.image1x, self.image1y, anchor=NW, image=self.img)
+        self.canvas.create_image(self.image2x, self.image2y, anchor=NW, image=self.img2)
         self.circle = self.canvas.create_oval(0, 0, 30, 30)
 
     # Overrides superclass update() function
