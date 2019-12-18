@@ -76,14 +76,14 @@ class Menu(Scene):
 
         if self.xscore == self.scorethreshold:
             cv2.destroyAllWindows()
-            self.sceneManager.setActiveScene("Exercise1")
+            self.sceneManager.setActiveScene("Exercise2")
             # self.canvas.destroy()
             # self.root.destroy()
             self.xscore = self.yscore = 0
             # return
         elif self.yscore == self.scorethreshold:
             cv2.destroyAllWindows()
-            self.sceneManager.setActiveScene("Exercise2")
+            self.sceneManager.setActiveScene("Exercise1")
             # self.canvas.destroy()
             # self.root.destroy()
             self.xscore = self.yscore = 0
