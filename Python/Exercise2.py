@@ -59,10 +59,10 @@ class Exercise2(Scene):
                 self.direction = "up"
                 self.count = 0
 
-        y3 = self.rightCircle.getCenter().y  # The coordinates for the green circle
-        x3 = self.rightCircle.getCenter().x
-        y4 = self.leftCircle.getCenter().y
-        x4 = self.leftCircle.getCenter().x
+        y3 = self.rightCircle[1]  # The coordinates for the green circle
+        x3 = self.rightCircle[0]
+        y4 = self.leftCircle[1]
+        x4 = self.leftCircle[0]
         speed = 0.01
 
         for x in range(0, self.reps + 1, 1):
