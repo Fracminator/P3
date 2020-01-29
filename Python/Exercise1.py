@@ -22,7 +22,7 @@ class Exercise1(Scene):
         self.direction = "up"
         self.hasStarted = False
 
-        self.movement = 20  # Default value is 5
+        self.movement = 5  # Default value is 5
         self.count = 0
 
     def reset(self):
