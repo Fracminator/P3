@@ -2,6 +2,7 @@ from Scene import Scene
 import tkinter as tk
 from tkinter import *
 import cv2
+import win32gui
 
 
 class Menu(Scene):

@@ -10,6 +10,7 @@ class Camera:
 
     def getFrame(self):
         frame = self.camera.read()[1]
+        # frame = cv2.imread("exe1.png")
         frame = cv2.resize(frame, (1280, 720))
 
         return cv2.flip(frame, 1)

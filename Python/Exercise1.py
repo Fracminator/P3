@@ -106,10 +106,10 @@ class Exercise1(Scene):
             scorePercentage = 100
 
         cv2.putText(output, "Score: " + str(scorePercentage) + "%",
-                    (0, 720),  # Bottom left corner of text
+                    (560, 50),  # Bottom left corner of text
                     cv2.FONT_HERSHEY_SIMPLEX,  # Font
                     1,  # Font scale
-                    (255, 255, 255),  # Font color
+                    (0, 0, 0),  # Font color
                     2)  # Line type
 
         cv2.namedWindow("Frame")
